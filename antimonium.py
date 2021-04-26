@@ -7,7 +7,7 @@ class PlaySection(Frame):
 		self.parent = parent
 
 		self.play_btn = Button(self, text="PLAY")
-		self.play_btn.pack(fill="both")
+		self.play_btn.pack(fill="both", padx=5, pady=5)
 
 class SettingsSection(Frame):
 	def __init__(self, parent, *args, **kwargs):
@@ -19,11 +19,11 @@ class SettingsSection(Frame):
 
 		self.select_btn = Button(self, text="Browse game")
 		self.remove_btn = Button(self, text="Remove selected game")
-		self.close_chk = Checkbutton(self, text="Close antimonium", var=self.chkValue)
+		self.close_chk = Checkbutton(self, text="Close antimonium on launch", var=self.chkValue)
 
-		self.select_btn.pack()
-		self.remove_btn.pack()
-		self.close_chk.pack()
+		self.select_btn.pack(padx=5, pady=5)
+		self.remove_btn.pack(padx=5, pady=5)
+		self.close_chk.pack(padx=5, pady=5)
 
 class ListSection(LabelFrame):
 	def __init__(self, parent, *args, **kwargs):
@@ -31,7 +31,7 @@ class ListSection(LabelFrame):
 		self.parent = parent
 
 		self.list = Listbox(self)
-		self.list.pack()
+		self.list.pack(padx=5, pady=5)
 
 class MainApplication(Frame):
 	def __init__(self, parent, *args, **kwargs):
@@ -42,7 +42,7 @@ class MainApplication(Frame):
 		self.settings = SettingsSection(self)
 		self.play = PlaySection(self)
 
-		self.list.grid(row=0, column=0, rowspan=2)
+		self.list.grid(row=0, column=0, rowspan=2, padx=5, pady=5)
 		self.settings.grid(row=0, column=1)
 		self.play.grid(row=1, column=1)
 
