@@ -7,7 +7,7 @@ class PlaySection(Frame):
 		self.parent = parent
 
 		self.play_btn = Button(self, text="PLAY")
-		self.play_btn.pack(fill="both", padx=5, pady=5)
+		self.play_btn.pack(padx=5, pady=5, fill="x", ipady=10, side="bottom")
 
 class SettingsSection(Frame):
 	def __init__(self, parent, *args, **kwargs):
@@ -30,7 +30,7 @@ class ListSection(LabelFrame):
 		LabelFrame.__init__(self, parent, *args, **kwargs)
 		self.parent = parent
 
-		self.list = Listbox(self)
+		self.list = Listbox(self, width=40, height=25)
 		self.list.pack(padx=5, pady=5)
 
 class MainApplication(Frame):
@@ -44,10 +44,11 @@ class MainApplication(Frame):
 
 		self.list.grid(row=0, column=0, rowspan=2, padx=5, pady=5)
 		self.settings.grid(row=0, column=1)
-		self.play.grid(row=1, column=1)
+		self.play.grid(row=1, column=1, sticky="nswe")
 
 if __name__ == "__main__":
 	root = Tk()
 	root.title("Antimonium")
+	root.resizable(0,0)
 	MainApplication(root).pack(side="top", fill="both", expand=True)
 	root.mainloop()
