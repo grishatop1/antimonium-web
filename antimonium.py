@@ -1,15 +1,39 @@
 import json
 import os
+import multiprocessing as mp
+import subprocess
+import threading
 
 from tkinter import *
 from tkinter.ttk import *
 
 from tkinter.filedialog import askopenfilename
 
+class AppProcess:
+	def __init__(self, filepath):
+		self.filepath = filepath
+		self.parent_conn, self.child_conn = mp.Pipe()
+		self.proc = mp.Process(target=self.run, args=(self.child_conn,), daemon=True)
+		self.proc.start()
+		threading.Thread(target=self.killDetector, daemon=True).start()
+		
+
+	def killDetector(self):
+		if self.parent_conn.recv():
+			app.play.play_btn.config(
+				state = "normal",
+				text = "PLAY"
+			)
+
+	def run(self, trans):
+		os.system(self.filepath)
+		trans.send("done")
+
 class PlaySection(Frame):
 	def __init__(self, parent, *args, **kwargs):
 		Frame.__init__(self, parent, *args, **kwargs)
 		self.parent = parent
+		self.current = None
 
 		self.play_btn = Button(self, text="PLAY", command=self.runGame)
 		self.play_btn.pack(padx=5, pady=5, fill="x", ipady=10, side="bottom")
@@ -18,9 +42,13 @@ class PlaySection(Frame):
 		data = self.parent.list.getSelectedItem()
 		if data:
 			filename, filepath = data
-		if filepath:
-			self.play_btn["text"] = f"Stop {filename}"
-			print(os.system(filepath))
+			if filepath:
+				self.play_btn.config(
+					state = "disabled",
+					text = "Running..."
+				)
+				root.focus()
+				self.current = AppProcess(filepath)
 
 class SettingsSection(Frame):
 	def __init__(self, parent, *args, **kwargs):
@@ -101,5 +129,6 @@ if __name__ == "__main__":
 	root = Tk()
 	root.title("Antimonium")
 	root.resizable(0,0)
-	MainApplication(root).pack(side="top", fill="both", expand=True)
+	app = MainApplication(root)
+	app.pack(side="top", fill="both", expand=True)
 	root.mainloop()
