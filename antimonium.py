@@ -1,8 +1,8 @@
 import json
 import os
-import multiprocessing as mp
-import subprocess
+import subprocess as sub
 import threading
+import time
 
 from tkinter import *
 from tkinter.ttk import *
@@ -10,24 +10,37 @@ from tkinter.ttk import *
 from tkinter.filedialog import askopenfilename
 
 class AppProcess:
-	def __init__(self, filepath):
+	def __init__(self, filepath, name):
 		self.filepath = filepath
-		self.parent_conn, self.child_conn = mp.Pipe()
-		self.proc = mp.Process(target=self.run, args=(self.child_conn,), daemon=True)
-		self.proc.start()
-		threading.Thread(target=self.killDetector, daemon=True).start()
+		self.name = name
+		self.run()
+		self.running = True
+
+	def kill(self):
+		self.running = False
+		self.process.terminate()
+		app.play.resetButton()
+
+	def detector(self):
+		while True:
+			poll = self.process.poll()
+			if poll is None:
+				break
+			else:
+				time.sleep(0.5)
+
+		app.play.play_btn.config(
+					state = "normal",
+					text = f"Stop {self.name}",
+					command = app.play.current.kill
+				)
 		
+		self.process.wait()
+		app.play.resetButton()
 
-	def killDetector(self):
-		if self.parent_conn.recv():
-			app.play.play_btn.config(
-				state = "normal",
-				text = "PLAY"
-			)
 
-	def run(self, trans):
-		os.system(self.filepath)
-		trans.send("done")
+	def run(self):
+		self.process = sub.Popen([self.filepath], stdout=sub.PIPE, stderr=sub.PIPE)
 
 class PlaySection(Frame):
 	def __init__(self, parent, *args, **kwargs):
@@ -38,17 +51,27 @@ class PlaySection(Frame):
 		self.play_btn = Button(self, text="PLAY", command=self.runGame)
 		self.play_btn.pack(padx=5, pady=5, fill="x", ipady=10, side="bottom")
 
+	def resetButton(self):
+		app.play.play_btn.config(
+					state = "normal",
+					text = "PLAY",
+					command = app.play.runGame
+				)
+
 	def runGame(self):
 		data = self.parent.list.getSelectedItem()
 		if data:
 			filename, filepath = data
 			if filepath:
+				self.current = AppProcess(filepath, filename)
+				threading.Thread(target=self.current.detector, daemon=True).start()
 				self.play_btn.config(
 					state = "disabled",
 					text = "Running..."
 				)
 				root.focus()
-				self.current = AppProcess(filepath)
+			if self.parent.settings.chkValue.get() == True:
+				root.destroy()
 
 class SettingsSection(Frame):
 	def __init__(self, parent, *args, **kwargs):
@@ -59,7 +82,7 @@ class SettingsSection(Frame):
 		self.chkValue.set(False)
 
 		self.select_btn = Button(self, text="Browse game", command=self.addGameToList)
-		self.remove_btn = Button(self, text="Remove selected game")
+		self.remove_btn = Button(self, text="Remove selected game", command=self.removeSelected)
 		self.close_chk = Checkbutton(self, text="Close antimonium on launch", var=self.chkValue)
 
 		self.select_btn.pack(padx=5, pady=5)
@@ -80,6 +103,10 @@ class SettingsSection(Frame):
 		with open("games.json", "w") as f:
 			json.dump(games, f)
 		self.parent.list.addItem(filename)
+
+	def removeSelected(self):
+		i = self.parent.list.list.curselection()
+		self.parent.list.list.delete(i)
 		
 
 class ListSection(LabelFrame):
