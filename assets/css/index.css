@@ -1,0 +1,142 @@
+@font-face {
+    font-family: "Roboto";
+    src: url("/fonts/Roboto-Regular.ttf");
+}
+
+* {
+    padding:0;
+    margin:0;
+}
+
+html, body {
+    height: 100vh;
+}
+
+:root {
+    --primary-color: white;
+    --secondary-color: rgb(66, 66, 66);
+    --additional-color: #bb86fc;
+    --dark-color: #121212;
+}
+
+body {
+    background-color: var(--dark-color);
+    overflow: hidden;
+}
+
+.header {
+    width: 100%;
+    padding: 15px;
+    background-color: #1b1b1b;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+    color: var(--primary-color);
+    font-family: "Roboto";
+}
+
+.main {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+
+.column {
+    height: calc(100vh - 90px);
+    margin: 15px;
+    width: 100%;
+}
+
+.list {
+    height: 100%;
+    background-color: #2a2a2a;
+    border-radius: 0px 15px 15px 0px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    direction:rtl;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.list::-webkit-scrollbar {
+    width: 12px;               /* width of the entire scrollbar */
+}
+.list::-webkit-scrollbar-track {
+    background: #3a3a3a;        /* color of the tracking area */
+}
+.list::-webkit-scrollbar-thumb {
+    background-color: #7a7a7a;    /* color of the scroll thumb */
+}
+
+.list-element {
+    width: 100%;
+    direction:ltr;
+    padding: 20px;
+    transition: background-color 0.2s ease-out;
+    text-align: right;
+    color: var(--additional-color);
+    font-family: "Roboto";
+}
+
+.list-element:hover {
+    background-color: #111111;
+    cursor: pointer;
+}
+
+.glow-on-hover {
+    width: 220px;
+    height: 50px;
+    border: none;
+    outline: none;
+    color: var(--primary-color);
+    background: var(--secondary-color);
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    font-family: "Roboto";
+    font-size: 20px;
+    border-radius: 10px;
+}
+
+.glow-on-hover:before {
+    content: '';
+    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+    position: absolute;
+    top: -2px;
+    left:-2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing 20s linear infinite;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+    border-radius: 10px;
+}
+
+.glow-on-hover:active {
+    color: white;
+}
+
+.glow-on-hover:hover:before {
+    opacity: 1;
+}
+
+.glow-on-hover:after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: var(--secondary-color);
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}
+
+@keyframes glowing {
+    0% { background-position: 0 0; }
+    50% { background-position: 400% 0; }
+    100% { background-position: 0 0; }
+}
