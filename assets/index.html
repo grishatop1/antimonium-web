@@ -16,10 +16,7 @@
 
     <div class="main">
         <div class="column column-left">
-            <div class="list">
-                <div class="list-element">Audacity</div>
-                <div class="list-element">ProcessHacker</div>
-            </div>
+            <div class="list"></div>
             <button class="column-add" onclick="tellFile();"></button>
         </div>
         <div class="column column-right">
@@ -27,7 +24,10 @@
                 <input id="c1" type="checkbox">
                 <label for="c1">Close Antimonium on launch</label>
             </div>
-            <button class="glow-on-hover">PLAY</button>
+            <div class="btn-wrapper" style="position: relative;">
+                <button id="play-btn" onclick="run();">PLAY</button>
+                <div class="glow-effect"></div>
+            </div>
         </div>
     </div>
 
