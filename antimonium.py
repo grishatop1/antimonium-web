@@ -37,7 +37,8 @@ class AppProcess:
 		eel.setNormalState()
 
 	def run(self):
-		self.process = sub.Popen([self.filepath], stdout=sub.PIPE, stderr=sub.PIPE)
+		self.process = sub.Popen([self.filepath],
+                                         stdout=sub.PIPE, stderr=sub.PIPE)
 
 @eel.expose
 def loadItems():
@@ -62,9 +63,10 @@ def addFileToList(filename, filepath):
 @eel.expose
 def addFile():
 	root = tk.Tk()
+	root.attributes("-topmost", True)
 	root.withdraw()
 	filepath = askopenfilename(title="Select a program",
-								filetypes=(("Executable", ".exe"),))
+                                   filetypes=(("Executable", ".exe"),))
 	if not filepath: return
 
 	filename = os.path.splitext(os.path.basename(filepath))[0].title()
