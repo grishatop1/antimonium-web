@@ -55,4 +55,5 @@ function stop() {
 }
 
 //CALL
+document.oncontextmenu = new Function("return false;")
 loadPrograms();
