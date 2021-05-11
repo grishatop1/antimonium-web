@@ -22,6 +22,8 @@ html, body {
 body {
     background-color: var(--dark-color);
     overflow: hidden;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .header {
@@ -116,6 +118,12 @@ span, label {
     cursor: pointer;
 }
 
+.selected-element {
+    background-color: #111111;
+    z-index: 5;
+    box-shadow: 0px 0px 9px -1px #000000;
+}
+
 .glow-on-hover {
     width: 100%;
     height: 50px;
@@ -175,7 +183,6 @@ span, label {
 }
 
 .setting {
-    cursor: pointer;
     padding: 20px 0px;
 }
 

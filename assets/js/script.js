@@ -8,6 +8,9 @@ function addProgram(filename, filepath) {
     node.innerHTML = filename
     node.className = "list-element"
     node.setAttribute("data", filepath)
+    node.addEventListener('click', event => {
+        selectNode(node, event);
+    })
     document.getElementsByClassName("list")[0].appendChild(node)
 }
 
@@ -18,6 +21,12 @@ async function loadPrograms() {
     for (const [key, value] of Object.entries(programs)) {
         addProgram(key,value);
     }
+
+    document.querySelectorAll('.list-element').forEach(item => {
+        item.addEventListener('click', event => {
+            selectNode(item, event);
+        })
+    })
 }
 
 
