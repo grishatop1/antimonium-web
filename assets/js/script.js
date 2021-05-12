@@ -39,15 +39,20 @@ function setNormalState() {
     $(".glow-effect").css("opacity", "0");
 }
 
-function run() {
+async function run() {
     var selected_node = document.getElementsByClassName("selected-element")[0];
     if (!selected_node) return;
     var filename = selected_node.innerHTML;
     var filepath = selected_node.getAttribute("data");
     var doClose = document.getElementById("c1").checked;
-    setStopState(filename);
-    eel.runApp(filename, filepath, doClose);
-    if (doClose) window.close();
+    var complete = await eel.runApp(filename, filepath, doClose)();
+    if (complete) {
+        setStopState(filename);
+        if (doClose) window.close();
+    } else {
+        alert("Please run Antimonium as administrator.");
+    }
+    
 }
 
 function stop() {

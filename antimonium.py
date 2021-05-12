@@ -18,8 +18,7 @@ class AppProcess:
 	def __init__(self, filepath, name):
 		self.filepath = filepath
 		self.name = name
-		self.run()
-		self.running = True
+		self.running = False
 
 	def kill(self):
 		self.running = False
@@ -31,14 +30,18 @@ class AppProcess:
 			if poll is None:
 				break
 			else:
-				time.sleep(0.5)
+				time.sleep(0.2)
 		
 		self.process.wait()
 		eel.setNormalState()
 
 	def run(self):
-		self.process = sub.Popen([self.filepath],
-                                         stdout=sub.PIPE, stderr=sub.PIPE)
+		try:
+			self.process = sub.Popen([self.filepath],
+											stdout=sub.PIPE, stderr=sub.PIPE)
+			return True
+		except os.error:
+			return
 
 @eel.expose
 def loadItems():
@@ -77,9 +80,9 @@ def addFile():
 @eel.expose
 def runApp(name, path, doClose):
 	app.process = AppProcess(path, name)
-	if doClose:
-		sys.exit()
-	threading.Thread(target=app.process.detector, daemon=True).start()
+	if app.process.run():
+		threading.Thread(target=app.process.detector, daemon=True).start()
+		return True
 	
 @eel.expose
 def stopApp():
