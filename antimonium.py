@@ -88,6 +88,22 @@ def runApp(name, path, doClose):
 def stopApp():
 	app.process.kill()
 
+@eel.expose
+def renameApp(oldname, newname):
+	games = json.loads(loadItems())
+	data = games[oldname]
+	del games[oldname]
+	games[newname] = data
+	with open("games.json", "w") as f:
+		json.dump(games, f)
+
+@eel.expose
+def removeApp(name):
+	games = json.loads(loadItems())
+	del games[name]
+	with open("games.json", "w") as f:
+		json.dump(games, f)
+
 if __name__ == "__main__":
 	app = App()
 	eel.init("assets")

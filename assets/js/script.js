@@ -12,7 +12,8 @@ function addProgram(filename, filepath, date) {
     node.addEventListener('click', event => {
         selectNode(node, event);
     })
-    document.getElementsByClassName("list")[0].appendChild(node)
+    bindContextMenu(node);
+    document.getElementsByClassName("list")[0].appendChild(node);
 }
 
 async function loadPrograms() {

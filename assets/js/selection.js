@@ -27,7 +27,7 @@ function sortAZ() {
     });
 
     for (i = 0; i < itemsArr.length; ++i) {
-    list.appendChild(itemsArr[i]);
+        list.appendChild(itemsArr[i]);
     }
 }
 
@@ -69,6 +69,37 @@ function sortDate() {
     });
 
     for (i = 0; i < itemsArr.length; ++i) {
-    list.appendChild(itemsArr[i]);
+    list.prepend(itemsArr[i]);
     }
 }
+
+function bindContextMenu(node) {
+    node.addEventListener('contextmenu', function(e) {
+        cntx_node = document.getElementById("context-element-id")
+        cntx_node.style.top = e.clientY.toString() + "px";
+        cntx_node.style.left = e.clientX.toString() + "px";
+        cntx_node.style.display = "block";
+        $("#context-element-id").data("data-node", node);
+        e.preventDefault();
+    }, false);     
+    $(document).bind("click", function(event) {
+      document.getElementById("context-element-id").style.display = "none";
+    });
+}
+
+function renameElement(e) {
+    node = $("#context-element-id").data("data-node");
+    var changedName = prompt("Rename:", node.innerHTML);
+    if (!changedName) return;
+    eel.renameApp(node.innerHTML, changedName);
+    node.innerHTML = changedName;
+}
+
+function removeElement(e) {
+    node = $("#context-element-id").data("data-node");
+    var proceed = confirm("Are you sure you want to remove " +node.innerHTML + " from the list?");
+    if (!proceed) return;
+    eel.removeApp(node.innerHTML);
+    node.remove();
+}
+    
