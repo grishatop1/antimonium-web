@@ -46,19 +46,19 @@ def loadItems():
 		games = f.read()
 		return games
 
-def addFileToJson(filename, filepath):
+def addFileToJson(filename, filepath, date):
 	with open("games.json", "r") as f:
 		try:
 			games = json.load(f)
 		except json.JSONDecodeError:
 			games = {}
 		
-		games[filename] = filepath
+		games[filename] = [filepath, date]
 		with open("games.json", "w") as f:
 			json.dump(games, f)
 
-def addFileToList(filename, filepath):
-	eel.addProgram(filename, filepath)
+def addFileToList(filename, filepath, date):
+	eel.addProgram(filename, filepath, date)
 
 @eel.expose
 def addFile():
@@ -70,8 +70,9 @@ def addFile():
 	if not filepath: return
 
 	filename = os.path.splitext(os.path.basename(filepath))[0].title()
-	addFileToJson(filename, filepath)
-	addFileToList(filename, filepath)
+	date = int(time.time())
+	addFileToJson(filename, filepath, date)
+	addFileToList(filename, filepath, date)
 
 @eel.expose
 def runApp(name, path, doClose):

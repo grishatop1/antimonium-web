@@ -110,7 +110,6 @@ span, label {
 }
 
 .list-element {
-    width: 100%;
     direction:ltr;
     padding: 20px;
     transition: background-color 0.2s ease-out;
@@ -211,4 +210,8 @@ span, label {
 
 .primary-btn:hover {
     background-color: #7a00ff;
+}
+
+.primary-btn:active {
+    transform:scale(0.95);
 }

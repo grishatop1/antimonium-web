@@ -3,11 +3,12 @@ function tellFile() {
 }
 
 eel.expose(addProgram);
-function addProgram(filename, filepath) {
+function addProgram(filename, filepath, date) {
     var node = document.createElement("div")
     node.innerHTML = filename
     node.className = "list-element"
     node.setAttribute("data", filepath)
+    node.setAttribute("date", date)
     node.addEventListener('click', event => {
         selectNode(node, event);
     })
@@ -19,7 +20,7 @@ async function loadPrograms() {
     if (!programs_raw){return};
     var programs = JSON.parse(programs_raw);
     for (const [key, value] of Object.entries(programs)) {
-        addProgram(key,value);
+        addProgram(key,value[0], value[1]);
     }
 }
 
