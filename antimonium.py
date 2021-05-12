@@ -104,7 +104,13 @@ def removeApp(name):
 	with open("games.json", "w") as f:
 		json.dump(games, f)
 
+def checkForTheJsonFile():
+	if not os.path.isfile("games.json"):
+		with open("games.json", "w") as f:
+			pass
+
 if __name__ == "__main__":
+	checkForTheJsonFile()
 	app = App()
 	eel.init("assets")
 	eel.start("index.html", port=0, size=(600,600), mode="chrome")
