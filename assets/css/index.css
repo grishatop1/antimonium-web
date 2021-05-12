@@ -188,5 +188,27 @@ span, label {
 .column-right {
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: center;
+}
+
+.sorts {
+    margin-bottom: auto;
+}
+
+.primary-btn {
+    padding: 8px;
+    border: none;
+    background-color: var(--additional-color);
+    color: white;
+    border-radius: 6px;
+    box-shadow: 0px 0px 5px 1px #000000;
+    font-family: "Roboto";
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    margin: 5px 0px;
+}
+
+.primary-btn:hover {
+    background-color: #7a00ff;
 }
