@@ -33,12 +33,14 @@ class AppProcess:
 				time.sleep(0.2)
 		
 		self.process.wait()
+		self.running = False
 		eel.setNormalState()
 
 	def run(self):
 		try:
 			self.process = sub.Popen([self.filepath],
 											stdout=sub.PIPE, stderr=sub.PIPE)
+			self.running = True
 			return True
 		except os.error:
 			return

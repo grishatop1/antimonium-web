@@ -1,30 +1,3 @@
-function tellFile() {
-    eel.addFile();
-}
-
-eel.expose(addProgram);
-function addProgram(filename, filepath, date) {
-    var node = document.createElement("div")
-    node.innerHTML = filename
-    node.className = "list-element"
-    node.setAttribute("data", filepath)
-    node.setAttribute("date", date)
-    node.addEventListener('click', event => {
-        selectNode(node, event);
-    })
-    bindContextMenu(node);
-    document.getElementsByClassName("list")[0].appendChild(node);
-}
-
-async function loadPrograms() {
-    var programs_raw = await eel.loadItems()();
-    if (!programs_raw){return};
-    var programs = JSON.parse(programs_raw);
-    for (const [key, value] of Object.entries(programs)) {
-        addProgram(key,value[0], value[1]);
-    }
-}
-
 function setStopState(name) {
     button_node = document.getElementById("play-btn");
     button_node.innerHTML = "Stop " + name;
@@ -61,6 +34,5 @@ function stop() {
     eel.stopApp();
 }
 
-//CALL
+//CALLS
 document.oncontextmenu = new Function("return false;")
-loadPrograms();
