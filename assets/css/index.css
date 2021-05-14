@@ -114,13 +114,22 @@ span, label {
     padding: 20px;
     transition: background-color 0.2s ease-out;
     text-align: right;
-    color: var(--additional-color);
-    font-family: "Roboto";
 }
 
 .list-element:hover {
     background-color: #373737;
     cursor: pointer;
+}
+
+.list-element span {
+    color: var(--additional-color);
+    font-family: "Roboto";
+    font-size: 14px;
+}
+
+.list-element img {
+    vertical-align: middle;
+    margin: 0px 10px;
 }
 
 .selected-element {

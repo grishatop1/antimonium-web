@@ -89,17 +89,17 @@ function bindContextMenu(node) {
 
 function renameElement(e) {
     node = $("#context-element-id").data("data-node");
-    var changedName = prompt("Rename:", node.innerHTML);
+    var changedName = prompt("Rename:", node.childNodes[1].innerHTML);
     if (!changedName) return;
-    eel.renameApp(node.innerHTML, changedName);
-    node.innerHTML = changedName;
+    eel.renameApp(node.childNodes[1].innerHTML, changedName);
+    node.childNodes[1].innerHTML = changedName;
 }
 
 function removeElement(e) {
     node = $("#context-element-id").data("data-node");
-    var proceed = confirm("Are you sure you want to remove " +node.innerHTML + " from the list?");
+    var proceed = confirm("Are you sure you want to remove " + node.childNodes[1].innerHTML + " from the list?");
     if (!proceed) return;
-    eel.removeApp(node.innerHTML);
+    eel.removeApp(node.childNodes[1].innerHTML);
     node.remove();
 }
 
@@ -110,7 +110,12 @@ function tellFile() {
 eel.expose(addProgram);
 function addProgram(filename, filepath, date) {
     var node = document.createElement("div")
-    node.innerHTML = filename
+    var img = document.createElement("img")
+    var text = document.createElement("span")
+    text.innerHTML = filename
+    img.src = "/cache/" + filename + ".png"
+    node.appendChild(img)
+    node.appendChild(text)
     node.className = "list-element"
     node.setAttribute("data", filepath)
     node.setAttribute("date", date)

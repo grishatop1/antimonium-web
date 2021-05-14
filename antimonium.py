@@ -10,6 +10,8 @@ import sys
 import tkinter as tk
 from tkinter.filedialog import askopenfilename
 
+from script.icon import makeIcon, removeIcon, renameIcon
+
 class App:
 	def __init__(self):
 		self.process = None
@@ -47,6 +49,7 @@ class AppProcess:
 
 @eel.expose
 def loadItems():
+	checkForTheJsonFile()
 	with open("games.json", "r") as f:
 		games = f.read()
 		return games
@@ -76,6 +79,8 @@ def addFile():
 
 	filename = os.path.splitext(os.path.basename(filepath))[0].title()
 	date = int(time.time())
+
+	makeIcon(filepath, filename)
 	addFileToJson(filename, filepath, date)
 	addFileToList(filename, filepath, date)
 
@@ -92,6 +97,7 @@ def stopApp():
 
 @eel.expose
 def renameApp(oldname, newname):
+	renameIcon(oldname, newname)
 	games = json.loads(loadItems())
 	data = games[oldname]
 	del games[oldname]
@@ -101,6 +107,7 @@ def renameApp(oldname, newname):
 
 @eel.expose
 def removeApp(name):
+	removeIcon(name)
 	games = json.loads(loadItems())
 	del games[name]
 	with open("games.json", "w") as f:
@@ -115,4 +122,4 @@ if __name__ == "__main__":
 	checkForTheJsonFile()
 	app = App()
 	eel.init("assets")
-	eel.start("index.html", port=0, size=(600,600), mode="chrome")
+	eel.start("index.html", port=0, size=(600,600))
