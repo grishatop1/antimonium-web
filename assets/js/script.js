@@ -16,7 +16,7 @@ function setNormalState() {
 async function run() {
     var selected_node = document.getElementsByClassName("selected-element")[0];
     if (!selected_node) return;
-    var filename = selected_node.innerHTML;
+    var filename = selected_node.childNodes[1].innerHTML;
     var filepath = selected_node.getAttribute("data");
     var doClose = document.getElementById("c1").checked;
     var complete = await eel.runApp(filename, filepath, doClose)();
