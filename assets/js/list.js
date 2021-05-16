@@ -79,11 +79,20 @@ function bindContextMenu(node) {
         cntx_node.style.top = e.clientY.toString() + "px";
         cntx_node.style.left = e.clientX.toString() + "px";
         cntx_node.style.display = "block";
+        window.setTimeout(function(){
+            cntx_node.style.transform = "none";
+            cntx_node.style.opacity = "1";
+        }, 20)
         $("#context-element-id").data("data-node", node);
         e.preventDefault();
     }, false);     
     $(document).bind("click", function(event) {
-      document.getElementById("context-element-id").style.display = "none";
+        cntx_node = document.getElementById("context-element-id")
+        cntx_node.style.opacity = "0";
+        cntx_node.style.transform = "translateY(10px) rotate(5deg)";
+        window.setTimeout(function(){
+            cntx_node.style.display = "none";
+        }, 200)
     });
 }
 

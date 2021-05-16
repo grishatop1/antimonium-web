@@ -234,6 +234,9 @@ span, label {
     left:0px;
     border-radius: 5px;
     padding: 5px 0px;
+    opacity: 0;
+    transform: translateY(10px) rotate(5deg);
+    transition: opacity 0.2s ease-out, transform 0.2s ease-out;
 }
 
 .context-button {
