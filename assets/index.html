@@ -1,47 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
     <title>Antimonium</title>
     <script type="text/javascript" src="/eel.js"></script>
     <script src="js/jquery.js"></script>
-    <link rel="stylesheet" href="css/index.css">
-</head>
-<body>
+
+    <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="css/columnadd.css">
+  </head>
+  <body>
     <div class="header">
-        <h2>Antimonium</h2>
+      <h2>Antimonium</h2>
     </div>
 
     <div class="main">
-        <div class="column column-left">
-            <div class="list"></div>
-            <button class="column-add" onclick="tellFile();"></button>
+      <div class="column column-left">
+        <div class="list"></div>
+        <svg id="column-add" width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" onmouseover="animatePlus()" onmouseout="deAnimatePlus()" onclick="tellFile()">
+          <g id="Frame 1">
+          <circle id="Ellipse 1" cx="50" cy="50" r="50" fill="#BB86FC"/>
+          <g id="x">
+          <line id="Line 1" x1="35" y1="49" x2="65" y2="49" stroke="white" stroke-width="6"/>
+          <line id="Line 2" x1="50" y1="64" x2="50" y2="34" stroke="white" stroke-width="6"/>
+          </g>
+          <g id="xpurple" style="opacity: 0;">
+          <line id="Line 1_2" x1="35" y1="49" x2="65" y2="49" stroke="#7300FF" stroke-width="6"/>
+          <line id="Line 2_2" x1="50" y1="64" x2="50" y2="34" stroke="#7300FF" stroke-width="6"/>
+          </g>
+          </g>
+        </svg>         
+      </div>
+      <div class="column column-right">
+        <div class="sorts">
+          <button class="primary-btn" onclick="sortAZ();">Sort A-Z</button>
+          <button class="primary-btn" onclick="sortZA();">Sort Z-A</button>
+          <button class="primary-btn" onclick="sortDate();">
+            Sort by date
+          </button>
         </div>
-        <div class="column column-right">
-            <div class="sorts">
-                <button class="primary-btn" onclick="sortAZ();">Sort A-Z</button>
-                <button class="primary-btn" onclick="sortZA();">Sort Z-A</button>
-                <button class="primary-btn" onclick="sortDate();">Sort by date</button>
-            </div>
-            <div class="setting">
-                <input id="c1" type="checkbox">
-                <label for="c1">Close Antimonium on launch</label>
-            </div>
-            <div class="btn-wrapper" style="position: relative;">
-                <button id="play-btn" onclick="run();">PLAY</button>
-                <div class="glow-effect"></div>
-            </div>
+        <div class="setting">
+          <input id="c1" type="checkbox" />
+          <label for="c1">Close Antimonium on launch</label>
         </div>
+        <div class="btn-wrapper" style="position: relative">
+          <button id="play-btn" onclick="run();">PLAY</button>
+          <div class="glow-effect"></div>
+        </div>
+      </div>
     </div>
 
-    <div class="context" style="display: none;" id="context-element-id">
-        <button class="context-button" id="rename-element" onclick="renameElement(event);">Rename</button>
-        <button class="context-button" id="remove-element" style="color:red;" onclick="removeElement(event);">Remove from the list</button>
+    <div class="context" style="display: none" id="context-element-id">
+      <button
+        class="context-button"
+        id="rename-element"
+        onclick="renameElement(event);"
+      >
+        Rename
+      </button>
+      <button
+        class="context-button"
+        id="remove-element"
+        style="color: red"
+        onclick="removeElement(event);"
+      >
+        Remove from the list
+      </button>
     </div>
 
-<script src="js/list.js"></script>
-<script src="js/script.js"></script>
-</body>
+    <script src="js/list.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/animation.js"></script>
+  </body>
 </html>
