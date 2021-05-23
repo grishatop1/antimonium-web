@@ -1,0 +1,5 @@
+@media only screen and (max-height: 350px) {
+    .sorts {
+        display: none;
+    }
+  }

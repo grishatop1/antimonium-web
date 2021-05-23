@@ -24,6 +24,7 @@ body {
     overflow: hidden;
     -ms-user-select: none;
     user-select: none;
+    min-width:400px;
 }
 
 .header {
